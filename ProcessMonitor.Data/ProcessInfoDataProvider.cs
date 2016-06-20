@@ -1,0 +1,44 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using ProcessMonitor.Recorder;
+
+namespace ProcessMonitor.Data
+{
+    /// <summary>
+    /// Data provider accessing information about running processes on the PC.
+    /// </summary>
+    public class ProcessInfoDataProvider : IProcessInfoDataProvider
+    {
+        /// <summary>
+        /// PC processes recorder.
+        /// </summary>
+        private readonly IRecorder processRecorder;
+
+        /// <summary>
+        /// Class constructor.
+        /// </summary>
+        public ProcessInfoDataProvider()
+        {
+            processRecorder = Recorder.Recorder.Instance;
+        }
+
+        /// <summary>
+        /// Adds handler triggering on Cpu or High load event.
+        /// </summary>
+        /// <param name="handler">Handler triggering on Cpu or High load event.</param>
+        public void AddHighloadEventHandler(HighLoadEventHandler handler)
+        {
+            processRecorder.OnHighLoadEvent += (sender, args) => handler(this, args);
+        }
+
+        /// <summary>
+        /// Returns current process list.
+        /// </summary>
+        /// <returns>Process list.</returns>
+        public IEnumerable<Process> GetProcesses()
+        {
+            throw new NotImplementedException();
+        }
+    }
+}
