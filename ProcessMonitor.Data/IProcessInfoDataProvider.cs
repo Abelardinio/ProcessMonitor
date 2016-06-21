@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
+using System.Threading.Tasks;
+
+using ProcessMonitor.Core;
 using ProcessMonitor.Recorder;
 
 namespace ProcessMonitor.Data
@@ -20,6 +22,6 @@ namespace ProcessMonitor.Data
         /// Returns current process list.
         /// </summary>
         /// <returns>Process list.</returns>
-        IEnumerable<Process> GetProcesses();
+        Task<IEnumerable<IProcessInfo>> GetProcessesAsync();
     }
 }

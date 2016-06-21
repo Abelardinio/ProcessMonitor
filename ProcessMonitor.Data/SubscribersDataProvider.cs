@@ -3,6 +3,8 @@ using ProcessMonitor.Core;
 
 namespace ProcessMonitor.Data
 {
+    using System.Threading.Tasks;
+
     /// <summary>
     /// Data provider accessing information about push notifications subscribers.
     /// </summary>
@@ -22,12 +24,17 @@ namespace ProcessMonitor.Data
         /// Adds new subscriber.
         /// </summary>
         /// <param name="subscriber">Subscriber information.</param>
-        public void Add(ISubscriber subscriber)
+        /// <returns>Async operation result.</returns>
+        public Task AddAsync(ISubscriber subscriber)
         {
-            lock (subscribers)
-            {
-                subscribers.Add(subscriber);
-            }
+            return Task.Run(
+                (() =>
+                    {
+                        lock (subscribers)
+                        {
+                            subscribers.Add(subscriber);
+                        }
+                    }));
         }
     }
 }

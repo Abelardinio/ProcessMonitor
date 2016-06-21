@@ -1,10 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+using ProcessMonitor.Core;
 using ProcessMonitor.Recorder;
 
 namespace ProcessMonitor.Data
 {
+
     /// <summary>
     /// Data provider accessing information about running processes on the PC.
     /// </summary>
@@ -36,9 +39,10 @@ namespace ProcessMonitor.Data
         /// Returns current process list.
         /// </summary>
         /// <returns>Process list.</returns>
-        public IEnumerable<Process> GetProcesses()
+        public async Task<IEnumerable<IProcessInfo>> GetProcessesAsync()
         {
-            throw new NotImplementedException();
+            var processList = await processRecorder.GetAllProcesses();
+            return processList.Select(process => new ProcessInfo { Id = process.Id, Name = process.ProcessName });
         }
     }
 }

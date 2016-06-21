@@ -1,12 +1,11 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Threading;
 
 namespace ProcessMonitor.Recorder
 {
-    using System;
-
     /// <summary>
     /// PC processes recorder.
     /// </summary>
@@ -65,6 +64,15 @@ namespace ProcessMonitor.Recorder
         /// Event triggers when PC is under high load.
         /// </summary>
         public event HighLoadEventHandler OnHighLoadEvent;
+
+        /// <summary>
+        /// Returns all PC processes.
+        /// </summary>
+        /// <returns>PC processes.</returns>
+        public Task<Process[]> GetAllProcesses()
+        {
+            return Task.Run(() => Process.GetProcesses());
+        }
 
 
         /// <summary>
